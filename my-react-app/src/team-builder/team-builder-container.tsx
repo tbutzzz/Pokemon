@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import '../index.css';
 import { StatsTable} from "./pokemon-stats.tsx";
 import { PokemonMoves, MovesContainer } from "./pokemon-moves.tsx";
+import PokemonAbilities from "./pokemon-abilities.tsx";
 
 export function TeamContainer() {
 
@@ -62,7 +63,12 @@ export function TeamSelector({ position }) {
                 />) : (
                     <div></div>
                 )}
-                <StatsTable data={selectedPokemon}/>
+                <div className='details-container'>
+                    <StatsTable data={selectedPokemon}/>
+                    <div className='abilities-container'>
+                        <PokemonAbilities selectedPokemon ={selectedPokemon}/>
+                    </div>
+                </div>
                 <MovesContainer selectedPokemon={selectedPokemon}/>
             </div>
             <div className='text-box'>
