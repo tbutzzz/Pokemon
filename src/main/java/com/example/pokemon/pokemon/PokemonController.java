@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/pokemon")
+@RequestMapping(path = "api/v1/pokemon_stats")
 public class PokemonController {
 
     private final PokemonService pokemonService;

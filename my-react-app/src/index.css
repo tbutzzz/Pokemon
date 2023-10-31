@@ -148,3 +148,51 @@ body.dark-mode {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
+
+.type-coverage-container {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.type-coverage-container.dark-mode {
+  background: #444;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.types-and-bonuses {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.type-sprite {
+  width: 70px;
+  height: auto;
+  flex-direction: row;
+}
+
+.type-sprite-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.type-bonus-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.green-checkbox {
+  width: 70px;
+  height: auto;
+  flex-direction: row;
+}

@@ -69,7 +69,9 @@ export function TeamSelector({ position }) {
                         <PokemonAbilities selectedPokemon ={selectedPokemon}/>
                     </div>
                 </div>
-                <MovesContainer selectedPokemon={selectedPokemon}/>
+                <MovesContainer
+                    selectedPokemon={selectedPokemon}
+                />
             </div>
             <div className='text-box'>
                 <input

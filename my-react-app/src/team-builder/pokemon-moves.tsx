@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useSelectedMoves } from './selected-moves-context.tsx'
 import '../index.css';
 
-export function MovesContainer({ selectedPokemon }) {
+export function MovesContainer({ selectedPokemon, moveData }) {
     return (
         <div className='moves-container'>
             {[1, 2, 3, 4].map((position) => (
@@ -17,6 +18,7 @@ export function MovesContainer({ selectedPokemon }) {
 
 export function PokemonMoves({ selectedPokemon, position }) {
     const [moveData, setMoveData] = useState([]);
+    const { addMove, removeMove } = useSelectedMoves();
 
     useEffect(() => {
         const fetchMoveData = async () => {
@@ -45,9 +47,7 @@ export function PokemonMoves({ selectedPokemon, position }) {
 
 
         return filteredMoves.map((move) => (
-            <div key={move.id}>
-                {move.move} (Power: {move.base_power})
-            </div>
+            move.move
         ));
     }, [selectedPokemon, moveData]);
 
@@ -58,7 +58,13 @@ export function PokemonMoves({ selectedPokemon, position }) {
                     {moveOptions.length > 0 ? (
                         <div>
                             <h3>{`Move ${position}`}</h3>
-                            <select>
+                            <select
+                            onChange={(e) => {
+                                console.log('changing move', e.target.value);
+                                const selectedMove = e.target.value;
+                                selectedMove === 'disabled' ? removeMove(selectedMove) : addMove(selectedMove);
+                            }}
+                            >
                                 <option disabled selected>
                                     Select a move
                                 </option>

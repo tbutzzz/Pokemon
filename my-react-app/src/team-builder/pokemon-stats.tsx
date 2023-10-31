@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '../index.css';
 
 export function StatsTable({data}) {
@@ -7,7 +7,7 @@ export function StatsTable({data}) {
     }
 
     return (
-        <React.Fragment>
+        <Fragment>
             <table className='stats-table'>
                 <thead>
                     <tr>
@@ -45,7 +45,7 @@ export function StatsTable({data}) {
                     </tr>
                 </tbody>
             </table>
-        </React.Fragment>
+        </Fragment>
     )
 }
 
