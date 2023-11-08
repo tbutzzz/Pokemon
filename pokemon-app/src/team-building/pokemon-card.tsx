@@ -38,6 +38,7 @@ export default function PokemonCard ({ pokemonStatsData, key, cardId, pokemonCar
     const [ selectedPokemonAbilitiesData, setSelectedPokemonAbilitiesData ] = useState([]);
     const [ typeEffectivenessData, setTypeEffectivenessData ] = useState([]);
     const [ selectedSortOption, setSelectedSortOption ] = useState('');
+    const [ optimizedMoves, setOptimizedMoves ] = useState([]);
 
     const containerStyle = {
         backgroundColor: 'gray',
@@ -62,6 +63,10 @@ export default function PokemonCard ({ pokemonStatsData, key, cardId, pokemonCar
 
     const handleNameChange = (cardId) => (event, newValue) => {
         handleUpdatePokemonCardName(newValue, cardId);
+    }
+
+    const handleUpdateOptimizedMoves = (updatedOptimizedMoves) => {
+        setOptimizedMoves(updatedOptimizedMoves);
     }
 
     useEffect(() => {
@@ -110,7 +115,8 @@ export default function PokemonCard ({ pokemonStatsData, key, cardId, pokemonCar
                     base_power: move.base_power,
                     accuracy: move.accuracy,
                     battle_effect: move.battle_effect,
-                    secondary_effect: move.secondary_effect
+                    secondary_effect: move.secondary_effect,
+                    pokemon: move.pokemon
                 }));
 
             setAvailableMoves(selectedPokemonMoves);
@@ -131,11 +137,12 @@ export default function PokemonCard ({ pokemonStatsData, key, cardId, pokemonCar
     }, [pokemonCardData]);
 
     const handleUpdateMoves = (updatedMove, moveId) => {
-        const newMoves = allSelectedMoves.map((move) => {
-            return move.id === moveId ? {...move, move: updatedMove} : move;
-        })
-        setAllSelectedMoves(newMoves);
-    }
+        setAllSelectedMoves((prevState) => {
+            return prevState.map((move) => {
+                return move.id === moveId ? { ...move, move: updatedMove } : move;
+            });
+        });
+    };
 
     const updateSelectedSortOption = (updatedValue) => {
         setSelectedSortOption(updatedValue);
@@ -167,6 +174,7 @@ export default function PokemonCard ({ pokemonStatsData, key, cardId, pokemonCar
                         selectedPokemon={pokemonCardData[cardId - 1].name}
                         autocompleteRef={autocompleteRef}
                         selectedSortOption={selectedSortOption}
+                        optimizedMoves={optimizedMoves}
                     />
                 ))}
                 <OptimizeMoves
@@ -176,6 +184,7 @@ export default function PokemonCard ({ pokemonStatsData, key, cardId, pokemonCar
                     selectedPokemon={pokemonCardData[cardId - 1].name}
                     pokemonStatValues={pokemonStatValues}
                     typeEffectivenessData={typeEffectivenessData}
+                    handleUpdateOptimizedMoves={handleUpdateOptimizedMoves}
                 />
                 </div>
             </Container>
@@ -202,7 +211,11 @@ export default function PokemonCard ({ pokemonStatsData, key, cardId, pokemonCar
             </div>
             </div>
             <PokemonStats pokemonStatsData={pokemonStatsData} key={cardId - 1} pokemonStatValues={pokemonStatValues}/>
-            <TypeEffectiveness  typeEffectivenessData={typeEffectivenessData} allSelectedMoves={allSelectedMoves} moveData={moveData}/>
+            <TypeEffectiveness
+                typeEffectivenessData={typeEffectivenessData}
+                allSelectedMoves={allSelectedMoves}
+                moveData={moveData}
+            />
         </Card>
     )
 }

@@ -15,14 +15,25 @@ const selectStyle = {
     height: 50,
 };
 
-export default function PokemonMoves ({ moveId, moveData, availableMoves, handleUpdateMoves, selectedPokemon, autocompleteRef, selectedSortOption }) {
+export default function PokemonMoves ({ moveId, moveData, availableMoves, handleUpdateMoves, selectedPokemon, autocompleteRef, selectedSortOption, optimizedMoves }) {
     const [selectedMove, setSelectedMove] = useState(null);
     const [ sortedMoves, setSortedMoves ] = useState(availableMoves);
     const [ loading, setLoading ] = useState(false);
 
+    useEffect(() => {
+        console.log('optimizedMoves', optimizedMoves[moveId]);
+        setSelectedMove(optimizedMoves[moveId]);
+        handleUpdateMoves(optimizedMoves[moveId], moveId)
+    }, [optimizedMoves]);
+
     const handleMoveSelection = (moveId) => (event) => {
-        setSelectedMove(event.target.value);
-        handleUpdateMoves(event.target.value, moveId);
+        if (optimizedMoves && optimizedMoves.length) {
+            setSelectedMove(optimizedMoves[moveId]);
+            handleUpdateMoves(optimizedMoves[moveId], moveId);
+        } else {
+            setSelectedMove(event.target.value);
+            handleUpdateMoves(event.target.value, moveId);
+        }
     };
 
     const handleOnClick = () => {
